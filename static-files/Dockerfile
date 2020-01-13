@@ -3,6 +3,7 @@ ENV AUTHOR=Docker
 
 WORKDIR /usr/share/nginx/html
 COPY Hello_docker.html /usr/share/nginx/html
+RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 
 USER 1001
 
