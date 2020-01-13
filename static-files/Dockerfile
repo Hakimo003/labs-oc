@@ -2,6 +2,7 @@ FROM nginx
 ENV AUTHOR=Docker
 
 WORKDIR /usr/share/nginx/html
+USER root
 COPY Hello_docker.html /usr/share/nginx/html
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
