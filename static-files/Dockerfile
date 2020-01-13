@@ -1,11 +1,4 @@
-FROM nginx:alpine
-ENV AUTHOR=Docker
-
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-WORKDIR /usr/share/nginx/html
-COPY Hello_docker.html /usr/share/nginx/html
-
+FROM nginx:mainline
 
 # support running as arbitrary user which belogs to the root group
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
@@ -18,6 +11,15 @@ EXPOSE 8081
 RUN sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf
 
 RUN addgroup nginx root
+
+USER nginx
+
+ENV AUTHOR=Docker
+
+WORKDIR /usr/share/nginx/html
+
+COPY Hello_docker.html /usr/share/nginx/html
+
 
 CMD cd /usr/share/nginx/html && sed -e s/Docker/"$AUTHOR"/ Hello_docker.html > index.html ; nginx -g 'daemon off;'
 
